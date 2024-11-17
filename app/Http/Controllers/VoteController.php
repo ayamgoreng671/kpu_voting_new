@@ -75,10 +75,10 @@ class VoteController extends Controller
         $level = Auth::user()->classroom->level;
         $limit = 0;
         if ($level == 1) {
-            $limit = 3;
+            $limit = 2;
 
         } elseif ($level == 2) {
-            $limit = 2;
+            $limit = 1;
 
         } elseif ($level == 3) {
             $limit = 1;
