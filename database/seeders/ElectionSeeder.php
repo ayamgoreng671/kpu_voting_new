@@ -68,7 +68,7 @@ class ElectionSeeder extends Seeder
             $bebek = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
             // dd($response->json('candidateIds'));
             foreach ($bebek as $candidate) {
-                $data["photo"] = "";
+                $data["photo"] = "photos/default.png";
                 $data["name"] = "Empty Box";
                 $data["bio"] = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, molestiae repudiandae mollitia voluptate veritatis sequi ducimus nobis commodi in maxime officia? Dicta ea similique dolorum debitis, eum architecto asperiores quae.";
                 $data["vision"] = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia, molestiae repudiandae mollitia voluptate veritatis sequi ducimus nobis commodi in maxime officia? Dicta ea similique dolorum debitis, eum architecto asperiores quae.";
