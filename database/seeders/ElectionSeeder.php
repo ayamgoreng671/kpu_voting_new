@@ -60,7 +60,7 @@ class ElectionSeeder extends Seeder
 
             "start_datetime" => "2024-11-18 07:00:00",
             "end_datetime" => "2024-11-18 17:00:00",
-            "category_id" => 1,
+            "category_id" => 2,
         ]);
 
         // dd($response->json('contractAddress'));

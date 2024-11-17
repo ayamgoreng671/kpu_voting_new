@@ -87,8 +87,8 @@ class VoteController extends Controller
             $limit = 0;
         }
 
-
-
+        $candidates = Candidate::where("election_id", $id)->where("classroom_id", $userClass)->get();
+        // dd($candidates);
         if ($election->category_id == 1) {
             
             return view("vote", [
@@ -102,7 +102,7 @@ class VoteController extends Controller
                 return redirect()->route("elections");
             }
             return view("vote", [
-                "candidates" => Candidate::where("election_id", $id)->where("classroom_id", $userClass)->get(),
+                "candidates" => $candidates,
                 "candidatesCount" => Candidate::where("election_id", $id)->where("classroom_id", $userClass)->count(),
                 "limit" => $limit,
                 "election" => $election

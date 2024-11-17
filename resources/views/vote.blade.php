@@ -92,10 +92,10 @@
                                     <input type="radio" name="candidate" value="{{ $candidate->id }}" class="mr-2">
                                     <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
                                 </label>
-                                <p class="text-gray-500 text-sm mt-1">[Brief bio, policies, and achievements]</p>
+                                <p class="text-gray-500 text-sm mt-1">{{ $candidate->bio }}</p>
 
                                 <button type="button" class="text-primary hover:underline text-sm"
-                                onclick="openModal('{{ $candidate->name }}', 'Candidate 1 Vision...', 'Candidate 1 Mission...', 'https://via.placeholder.com/150')">View
+                                onclick="openModal('{{ $candidate->name }}', '{{ $candidate->vision }}', '{{ $candidate->mission }}', '{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png') }}')">View
                                 Full Profile</button>
                             </div>
                         </div>

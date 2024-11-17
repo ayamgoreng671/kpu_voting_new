@@ -37,7 +37,7 @@
             <!-- Welcome Section -->
             <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">
                 <h2 class="text-xl font-bold text-gray-800">Welcome back, {{ Auth::user()->name }}!</h2>
-                <p class="text-gray-600 mt-1">Your role: Voter</p>
+                <p class="text-gray-600 mt-1">Your role:  Voter</p>
             </section>
             <!-- Quick Navigation Panel -->
             <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 max-w-3xl mx-auto">
@@ -47,8 +47,8 @@
                 <a href="{{ route('history') }}"
                     class="bg-primary text-white p-3 rounded-lg text-center shadow hover:bg-opacity-90 transition">View
                     History</a>
-                <a href="notifications.html"
-                    class="bg-primary text-white p-3 rounded-lg text-center shadow hover:bg-opacity-90 transition">Notifications</a>
+                {{-- <a href="notifications.html"
+                    class="bg-primary text-white p-3 rounded-lg text-center shadow hover:bg-opacity-90 transition">Notifications</a> --}}
                 <a href="/profile"
                     class="bg-primary text-white p-3 rounded-lg text-center shadow hover:bg-opacity-90 transition">Profile
                     Settings</a>
@@ -83,8 +83,7 @@
                     <li class="border-b border-gray-200 pb-3">
                         <h4 class="text-md font-semibold">Past Election Title</h4>
                         <p class="text-gray-600 text-sm">Voted for: Candidate Name</p>
-                        <a href="transaction.html" class="text-primary font-semibold hover:underline text-sm">Verify on
-                            Blockchain</a>
+                        <a href="transaction.html" class="text-primary font-semibold hover:underline text-sm">Check History</a>
                     </li>
                     <!-- Add more history records as needed -->
                 </ul>
@@ -92,14 +91,14 @@
 
 
             <!-- Notifications and Alerts -->
-            <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">
+            {{-- <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">
                 <h3 class="text-lg font-semibold text-gray-800">Notifications</h3>
                 <ul class="mt-3 space-y-2">
                     <li class="text-gray-600 text-sm">New election available: [Election Title]</li>
                     <li class="text-gray-600 text-sm">Reminder: Upcoming election closing soon.</li>
                     <!-- Add more notifications as needed -->
                 </ul>
-            </section>
+            </section> --}}
         @endrole
 
 
