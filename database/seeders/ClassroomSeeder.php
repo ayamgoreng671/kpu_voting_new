@@ -126,6 +126,11 @@ class ClassroomSeeder extends Seeder
                 "level" => "3",
                 "major" => "TJAT",
             ],
+            [
+                "classroom" => "Guru",
+                "level" => "3",
+                "major" => "Guru",
+            ],
         ]);
     }
 }
