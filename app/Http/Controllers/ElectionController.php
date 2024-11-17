@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Log;
 
 class ElectionController extends Controller
 {
-    private $nodeServerUrl = 'http://localhost:3000';
+    // private $nodeServerUrl = 'http://localhost:3000';
+    private $nodeServerUrl = 'http://10.10.100.62:3000/';
     public function castVoteView()
     {
         $elections = Election::all();
@@ -54,7 +55,7 @@ class ElectionController extends Controller
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('NODE_API_KEY')
-        ])->get('http://localhost:3000/candidates');
+        ])->get("{$this->nodeServerUrl}/candidates");
 
         if ($response->successful()) {
             return response()->json($response->json());
@@ -82,7 +83,7 @@ class ElectionController extends Controller
 
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('NODE_API_KEY')
-        ])->post('http://localhost:3000/addCandidate', [
+        ])->post('{$this->nodeServerUrl}/addCandidate', [
                     'name' => $request->input('name')
                 ]);
 
@@ -105,7 +106,7 @@ class ElectionController extends Controller
     {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . env('NODE_API_KEY')
-        ])->post('http://localhost:3000/registervoter', [
+        ])->post("{$this->nodeServerUrl}/registervoter", [
                     'name' => $request->input('name')
                 ]);
         if ($response->successful()) {

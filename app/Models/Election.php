@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Election extends Model
 {
@@ -17,5 +18,9 @@ class Election extends Model
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function users():BelongsToMany{
+        return $this->BelongsToMany(User::class, 'election_users')->withPivot('has_voted');
     }
 }

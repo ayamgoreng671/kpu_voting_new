@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string("bio");
             $table->string("vision");
             $table->string("mission");
-            $table->string("contract_candidateId");
+            // $table->string("contract_candidateId");
             $table->foreignId("classroom_id")->constrained();
             $table->foreignId("election_id")->constrained();
             $table->timestamps();

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -49,5 +50,9 @@ class User extends Authenticatable
 
     public function classroom(){
         return $this->belongsTo(Classroom::class);
+    }
+
+    public function elections():BelongsToMany{
+        return $this->BelongsToMany(Election::class, 'election_users')->withPivot('has_voted');
     }
 }

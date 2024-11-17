@@ -33,15 +33,25 @@
     @endsection
 
     <!-- Header -->
-    <header class="bg-primary text-white p-4 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-semibold">Secure Voting Platform</h1>
-            <nav>
-                <a href="/dashboard" class="text-white hover:underline ml-4">Dashboard</a>
-                <a href="/logout" class="text-white hover:underline ml-4">Logout</a>
+    <header class="bg-primary text-white p-3 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center px-20">
+            <!-- Replace text with logo -->
+            <a href="/">
+                <img src="{{ asset("logo/telkom.svg") }}" alt="Secure Voting Platform Logo" class="" width="120">
+            </a>
+            <nav class="flex">
+                <a href="{{ route('dashboard') }}" class="text-white hover:underline ml-4">Dashboard</a>
+
+                <a href="/profile" class="text-white hover:underline ml-4">Profile</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" href="" class="text-white hover:underline ml-4">Logout</button>
+
+                </form>
+
             </nav>
-        </div>
     </header>
+
 
     <!-- Main Content -->
     <main class="container mx-auto py-6 px-4 lg:px-0">
@@ -64,8 +74,9 @@
                             @if ($candidate->name == 'Empty Box')
                                 @continue
                             @endif
+
                             <label class="block bg-gray-50 border border-gray-300 rounded-lg p-3 cursor-pointer">
-                                <input type="radio" name="candidate" value="{{ $candidate->contract_candidateId }}"
+                                <input type="radio" name="candidate" value="{{ $candidate->id }}"
                                     class="mr-2">
                                 <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
                                 <p class="text-gray-500 text-sm mt-1">[Brief bio, policies, and achievements]</p>
@@ -74,15 +85,21 @@
                                     Full Profile</button>
                             </label>
                         @else
-                            <label class="block bg-gray-50 border border-gray-300 rounded-lg p-3 cursor-pointer">
-                                <input type="radio" name="candidate" value="{{ $candidate->contract_candidateId }}"
-                                    class="mr-2">
-                                <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
+                        <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg p-4 space-x-4">
+                            <img src="{{$candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png')  }}" alt="https://via.placeholder.com/100" class="w-24 h-24 rounded-full object-cover">
+                            <div class="flex-1">
+                                <label>
+                                    <input type="radio" name="candidate" value="{{ $candidate->id }}" class="mr-2">
+                                    <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
+                                </label>
                                 <p class="text-gray-500 text-sm mt-1">[Brief bio, policies, and achievements]</p>
+
                                 <button type="button" class="text-primary hover:underline text-sm"
-                                    onclick="openModal('Candidate 1', 'Candidate 1 Vision...', 'Candidate 1 Mission...', 'https://via.placeholder.com/150')">View
-                                    Full Profile</button>
-                            </label>
+                                onclick="openModal('{{ $candidate->name }}', 'Candidate 1 Vision...', 'Candidate 1 Mission...', 'https://via.placeholder.com/150')">View
+                                Full Profile</button>
+                            </div>
+                        </div>
+
                         @endif
                     @endforeach
 

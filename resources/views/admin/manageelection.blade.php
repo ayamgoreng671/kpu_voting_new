@@ -10,18 +10,25 @@
             }
         </style>
     @endsection
-
-    <!-- Navbar -->
     <header class="bg-primary text-white p-3 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-semibold">Secure Voting Dashboard</h1>
-            <nav>
-                <a href="/" class="text-white hover:underline ml-4">Dashboard</a>
+        <div class="container mx-auto flex justify-between items-center px-20">
+            <!-- Replace text with logo -->
+            <a href="/">
+                <img src="{{ asset("logo/telkom.svg") }}" alt="Secure Voting Platform Logo" class="" width="120">
+            </a>
+            <nav class="flex">
+                <a href="{{ route('dashboard') }}" class="text-white hover:underline ml-4">Dashboard</a>
+
                 <a href="/profile" class="text-white hover:underline ml-4">Profile</a>
-                <a href="/logout" class="text-white hover:underline ml-4">Logout</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" href="" class="text-white hover:underline ml-4">Logout</button>
+
+                </form>
+
             </nav>
-        </div>
     </header>
+
 
     <!-- Main Content -->
     <main class="container mx-auto py-6 px-4 lg:px-0">
@@ -108,10 +115,13 @@ background-color: rgb(185 28 28 / var(--tw-bg-opacity));">
                 </thead>
                 <tbody>
                     @foreach ($candidates as $candidate)
+                        @if ($candidate->name == 'Empty Box')
+                            @continue
+                        @endif
                         <tr>
                             <td class="px-4 py-2 border border-gray-300">{{ $loop->iteration }}</td>
                             <td class="px-4 py-2 border border-gray-300">
-                                <img src="https://via.placeholder.com/50" alt="Candidate Image"
+                                <img src="{{$candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png')  }}" alt="Candidate Image"
                                     class="w-12 h-12 rounded-full object-cover">
                             </td>
                             <td class="px-4 py-2 border border-gray-300">{{ $candidate->name }}</td>
@@ -212,9 +222,11 @@ background-color: rgb(185 28 28 / var(--tw-bg-opacity));">
                     class="px-4 w-1/5  py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition text-sm">Register
                     Voter</button>
             </form>
-            <form method="POST" action="{{route("admin.manage.addvoter", $election->id)}}">
+            <form method="POST" action="{{ route('admin.manage.addvoter', $election->id) }}">
                 @csrf
-                <button href="" class="px-4 w-1/3  py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition text-sm">Register All Users VoterId</button>
+                <button href=""
+                    class="px-4 w-1/3  py-2 bg-primary text-white rounded-md hover:bg-opacity-90 transition text-sm">Register
+                    All Users VoterId</button>
 
             </form>
         </section>

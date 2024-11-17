@@ -13,17 +13,26 @@
 <x-app-layout>
 
 
-
     <!-- Header -->
-    <header class="bg-primary text-white p-4 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-semibold">Secure Voting Platform</h1>
-            <nav>
-                <a href="/dashboard" class="text-white hover:underline ml-4">Dashboard</a>
-                <a href="/logout" class="text-white hover:underline ml-4">Logout</a>
+    <header class="bg-primary text-white p-3 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center px-20">
+            <!-- Replace text with logo -->
+            <a href="/">
+                <img src="{{ asset("logo/telkom.svg") }}" alt="Secure Voting Platform Logo" class="" width="120">
+            </a>
+            <nav class="flex">
+                <a href="{{ route('dashboard') }}" class="text-white hover:underline ml-4">Dashboard</a>
+
+                <a href="/profile" class="text-white hover:underline ml-4">Profile</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" href="" class="text-white hover:underline ml-4">Logout</button>
+
+                </form>
+
             </nav>
-        </div>
     </header>
+
 
     <!-- Main Content -->
     <main class="container mx-auto py-6 px-4 lg:px-0 max-w-5xl">
@@ -50,18 +59,23 @@
         <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
             <!-- Election Card -->
             @foreach ($elections as $election)
-            <div class="bg-white shadow-md rounded-lg p-6">
-                <h3 class="text-xl font-semibold text-gray-800">{{ $election->name }}</h3>
-                <p class="text-gray-600 mt-2">
-                    [Description for Election 1]
-                </p>
-                <p class="text-gray-500 text-sm mt-1">Ends on: [End Date and Time]</p>
-                <div class="mt-4 flex justify-between items-center">
-                    <a href="{{ route("votes.show", $election->id) }}"
-                        class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-opacity-90">Vote Now</a>
-                    <a href="/results?election_id=1" class="text-primary hover:underline">View Results</a>
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800">{{ $election->name }}</h3>
+                    <p class="text-gray-600 mt-2">
+                        [Description for Election 1]
+                    </p>
+                    <p class="text-gray-500 text-sm mt-1">Ends on: [End Date and Time]</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        {{-- {{ dd() }} --}}
+                        @if (Auth::user()->elections()->where('election_id', $election->id)->first()->pivot->has_voted == 0)
+                            <a href="{{ route('votes.show', $election->id) }}"
+                                class="bg-primary text-white py-2 px-4 rounded-lg hover:bg-opacity-90">Vote Now</a>
+                        @else
+                        <p class=" text-green-600">Vote Casted</p>
+                        @endif
+
+                    </div>
                 </div>
-            </div>
             @endforeach
 
 

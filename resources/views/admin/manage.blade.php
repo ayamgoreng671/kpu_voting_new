@@ -15,14 +15,22 @@
     @endsection
     <!-- Navbar -->
     <header class="bg-primary text-white p-3 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-lg font-semibold">Secure Voting Dashboard</h1>
-            <nav>
-                <a href="/" class="text-white hover:underline ml-4">Dashboard</a>
+        <div class="container mx-auto flex justify-between items-center px-20">
+            <!-- Replace text with logo -->
+            <a href="/">
+                <img src="{{ asset("logo/telkom.svg") }}" alt="Secure Voting Platform Logo" class="" width="120">
+            </a>
+            <nav class="flex">
+                <a href="{{ route('dashboard') }}" class="text-white hover:underline ml-4">Dashboard</a>
+
                 <a href="/profile" class="text-white hover:underline ml-4">Profile</a>
-                <a href="/logout" class="text-white hover:underline ml-4">Logout</a>
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" href="" class="text-white hover:underline ml-4">Logout</button>
+
+                </form>
+
             </nav>
-        </div>
     </header>
 
     <!-- Main Content -->
@@ -108,7 +116,7 @@
                                 <td class="px-4 py-2">
                                     <a href="{{ route('admin.manage.election', $election->id) }}"
                                         class="text-primary font-semibold hover:underline">Edit</a> |
-                                    <a href="#" class="text-primary font-semibold hover:underline">Deactivate</a>
+                                    <a href="{{ route('admin.manage.analytics', $election->id) }}" class="text-primary font-semibold hover:underline">View Analytics</a>
                                 </td>
                             </tr>
                         @endforeach

@@ -11,4 +11,6 @@ class ElectionUser extends Model
         "user_id",
         "has_voted",
     ];
+
+
 }

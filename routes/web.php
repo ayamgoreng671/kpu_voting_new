@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VoteController;
 use App\Models\Election;
 use Illuminate\Support\Facades\Route;
+use Spatie\Permission\Middleware\RoleMiddleware;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,9 +46,8 @@ Route::get('/voteview', [ElectionController::class, 'castVoteView']);
 Route::post('/vote', [ElectionController::class, 'castVote']);
 Route::get('/votestatus', [ElectionController::class, 'getVoteStatus']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [VoteController::class, "dashboard"])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/history', [VoteController::class, "electionHistory"])->middleware(['auth', 'verified'])->name('history');
 
 Route::get('/elections', [VoteController::class, "electionIndex"])->middleware(['auth', 'verified'])->name('elections');
 
@@ -55,12 +55,17 @@ Route::get('/votes/{id}', [VoteController::class, "voteView"])->middleware(['aut
 Route::post('/votes/{id}/submit', [VoteController::class, "castVote"])->middleware(['auth', 'verified'])->name('votes.store');
 
 // ADMIN COY
-Route::get('/admin/manage', [AdminController::class, "manageView"])->middleware(['auth', 'verified'])->name('admin.manage');
-Route::post('/admin/manage', [AdminController::class, "electionPost"])->middleware(['auth', 'verified'])->name('admin.manage.electionpost');
-Route::get('/admin/manage/{id}', [AdminController::class, "manageElectionView"])->middleware(['auth', 'verified'])->name('admin.manage.election');
-Route::post('/admin/manage/{id}', [AdminController::class, "addCandidate"])->middleware(['auth', 'verified'])->name('admin.manage.addcandidate');
-Route::post('/admin/manage/{id}/voter', [AdminController::class, "addAllVoterId"])->middleware(['auth', 'verified'])->name('admin.manage.addvoter');
-
+Route::middleware([
+    RoleMiddleware::class . ':admin',
+])->group(function () {
+    Route::get('/admin/manage', [AdminController::class, "manageView"])->name('admin.manage');
+    Route::post('/admin/manage', [AdminController::class, "electionPost"])->name('admin.manage.electionpost');
+    Route::get('/admin/manage/{id}', [AdminController::class, "manageElectionView"])->name('admin.manage.election');
+    Route::get('/admin/manage/{id}/analytics', [AdminController::class, "manageAnalyticsView"])->name('admin.manage.analytics');
+    Route::post('/admin/manage/{id}', [AdminController::class, "addCandidate"])->name('admin.manage.addcandidate');
+    Route::post('/admin/manage/{id}/voter', [AdminController::class, "addAllVoterId"])->name('admin.manage.addvoter');
+    Route::get('/admin/manage/{id}/analytics/data', [AdminController::class, "getVoteData"])->name('admin.manage.addvoter');
+});
 
 
 

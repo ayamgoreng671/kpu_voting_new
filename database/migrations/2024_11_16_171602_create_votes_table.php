@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('elections', function (Blueprint $table) {
+        Schema::create('votes', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->text("description");
-            $table->dateTime("start_datetime");
-            $table->dateTime("end_datetime");
-            // $table->string("election_contract_address");
-            $table->foreignId("category_id")->constrained();
+            $table->foreignId("election_user_id")->constrained();
+            $table->foreignId("candidate_id")->constrained();
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('elections');
+        Schema::dropIfExists('votes');
     }
 };
