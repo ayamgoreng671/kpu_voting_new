@@ -498,7 +498,7 @@ class CandidateSeeder extends Seeder
             "mission" => "Mengembangkan potensi siswa program kreatif, menciptakan lingkungan harmonis, solidaritas siswa, mewujudkan generasi berkualitas, dan penggadaian siswa, Mewujudkan siswa yg berdaya saing.",
             "classroom_id" => 9,
             "election_id" => 1,
-            "photo" => "3/3.png",
+            "photo" => "3/4.png",
 
 
 
