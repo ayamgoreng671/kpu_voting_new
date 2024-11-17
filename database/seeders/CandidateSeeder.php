@@ -447,5 +447,62 @@ class CandidateSeeder extends Seeder
 
         ]);
 
+        $candidate = Candidate::create([
+
+            "name" => "Gabriella Fajar S & Charen Jullieta K",
+            "bio" => "-",
+            "vision" => "Menjadikan osis ini menjadi wadah kreatifitas dan inspiratif siswa membentuk karakter cerdas, aktif, mulia, dan berprestasi.",
+            "mission" => "Mengembangkan kreativitas dan kepemimpinan berbagai kegiatan, meningkatkan partisipasi kegiatan osis, membangun karakter siswa yg mulia, menjalin kerjasama dalam berbagai pihak, menciptakan lingkungan positif.",
+            "classroom_id" => 9,
+            "election_id" => 1,
+            "photo" => "3/1.png",
+
+
+
+        ]);
+
+        $candidate = Candidate::create([
+
+            "name" => "Ahmad Nabil Fauzan A. & Syarifatun Nisa'i Nur Aulia",
+            "bio" => "-",
+            "vision" => "Mewujudkan osis wadah kolaborasi aktif yg menyelenggarakn kegiatan yg bermanfaat dan inspiratif yg bermanfaat.",
+            "mission" => "Menyelenggarakan kegiatan yg mempertemukan minat dan bakat siswa, menciptakan program osis yg berfokus pada kreatif dan kolaboratif.",
+            "classroom_id" => 8,
+            "election_id" => 1,
+            "photo" => "3/2.png",
+
+
+
+        ]);
+
+        $candidate = Candidate::create([
+
+            "name" => "Ilham Yudistira S.A. & Tifanny Oriza Meiladina",
+            "bio" => "-",
+            "vision" => "Mewujudkan dan membangun lingkungan sekolah kreatif inspiratif utk mendorong siswa mencapai ilmu yg berarti",
+            "mission" => "Mewujudkan program kerja yang inspiratif dan menarik, hubungan harmonis siswa dan guru,melibatkan siswa dalam organisasi utk menjalin kebersamaan.",
+            "classroom_id" => 15,
+            "election_id" => 1,
+            "photo" => "3/3.png",
+
+
+
+        ]);
+
+        
+        $candidate = Candidate::create([
+
+            "name" => "Reyjuno Al Cannavaro & Auraluthfia Annisa",
+            "bio" => "-",
+            "vision" => "Menjadikan osis wadah pengembangan siswa yg kreatif dan berjiwa kreatif tangguh, lingkungan nyaman.",
+            "mission" => "Mengembangkan potensi siswa program kreatif, menciptakan lingkungan harmonis, solidaritas siswa, mewujudkan generasi berkualitas, dan penggadaian siswa, Mewujudkan siswa yg berdaya saing.",
+            "classroom_id" => 9,
+            "election_id" => 1,
+            "photo" => "3/3.png",
+
+
+
+        ]);
+
     }
 }
