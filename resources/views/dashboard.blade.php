@@ -16,7 +16,7 @@
         <div class="container mx-auto flex justify-between items-center px-20">
             <!-- Replace text with logo -->
             <a href="/">
-                <img src="{{ asset("logo/telkom.svg") }}" alt="Secure Voting Platform Logo" class="" width="120">
+                <img src="{{ asset('logo/telkom.svg') }}" alt="Secure Voting Platform Logo" class="" width="120">
             </a>
             <nav class="flex">
                 <a href="/profile" class="text-white hover:underline ml-4">Profile</a>
@@ -37,7 +37,7 @@
             <!-- Welcome Section -->
             <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">
                 <h2 class="text-xl font-bold text-gray-800">Welcome back, {{ Auth::user()->name }}!</h2>
-                <p class="text-gray-600 mt-1">Your role:  Voter</p>
+                <p class="text-gray-600 mt-1">Your role: Voter</p>
             </section>
             <!-- Quick Navigation Panel -->
             <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 max-w-3xl mx-auto">
@@ -58,16 +58,17 @@
             <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">
                 <h3 class="text-lg font-semibold text-gray-800">Ongoing Elections</h3>
 
-                @foreach ($elections as $election)
+                @foreach ($electionsAll as $election)
                     @if (Auth::user()->elections()->where('election_id', $election->id)->first()->pivot->has_voted == 1)
-                    @continue
+                        @continue
                     @else
                         <ul class="mt-3 space-y-3">
                             <li class="border-b border-gray-200 pb-3">
                                 <h4 class="text-md font-semibold">{{ $election->name }}</h4>
                                 <p class="text-gray-600">{{ $election->description }}</p>
                                 <p class="text-gray-500 text-sm">Ends in: 2 days 5 hours</p>
-                                <a href="{{ route("votes.show", $election->id) }}" class="text-primary font-semibold hover:underline text-sm">Vote Now</a>
+                                <a href="{{ route('votes.show', $election->id) }}"
+                                    class="text-primary font-semibold hover:underline text-sm">Vote Now</a>
                             </li>
                             <!-- Add more elections as needed -->
                         </ul>
@@ -77,18 +78,28 @@
 
 
             <!-- Voting History -->
+
             <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">
                 <h3 class="text-lg font-semibold text-gray-800">Your Voting History</h3>
-                <ul class="mt-3 space-y-3">
-                    <li class="border-b border-gray-200 pb-3">
-                        <h4 class="text-md font-semibold">Past Election Title</h4>
-                        <p class="text-gray-600 text-sm">Voted for: Candidate Name</p>
-                        <a href="transaction.html" class="text-primary font-semibold hover:underline text-sm">Check History</a>
-                    </li>
-                    <!-- Add more history records as needed -->
-                </ul>
-            </section>
 
+
+
+                @foreach ($elections as $election)
+                    @if ($election->pivot->has_voted == 0)
+                        @continue
+                    @endif
+                    <ul class="mt-3 space-y-3">
+                        <li class="border-b border-gray-200 pb-3">
+                            <h4 class="text-md font-semibold">{{$election->name}}</h4>
+                            <p class="text-gray-600 text-sm">Voted for: {{ $votes->where('election_user_id', $electionUsers->where('election_id', $election->id)->first()->id)->first()->candidate->name }}</p>
+                            <a href="{{ route("history") }}" class="text-primary font-semibold hover:underline text-sm">Check
+                                History</a>
+                        </li>
+                        <!-- Add more history records as needed -->
+                    </ul>
+                   
+                @endforeach
+            </section>
 
             <!-- Notifications and Alerts -->
             {{-- <section class="bg-white shadow-md rounded-lg p-4 mb-6 max-w-3xl mx-auto">

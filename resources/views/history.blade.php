@@ -48,6 +48,7 @@
                         <h4 class="text-md font-semibold">Election: {{ $election->name }}</h4>
                         <p class="text-gray-600 text-sm">Description: {{ $election->description }}.</p>
                         <p class="text-gray-600 text-sm mt-1">Voted for: <span class="font-bold">{{ $votes->where("election_user_id", $electionUsers->where("election_id", $election->id)->first()->id)->first()->candidate->name }}</span></p>
+                        <p class="text-gray-600 text-sm mt-1">Voted at: <span class="font-bold">{{ $votes->where("election_user_id", $electionUsers->where("election_id", $election->id)->first()->id)->first()->created_at }}</span></p>
 
                         <!-- Candidate Details -->
                         <div class="mt-2 border-t pt-2">

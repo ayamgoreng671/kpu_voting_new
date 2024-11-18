@@ -155,7 +155,7 @@
 
         function openModal(name, vision, mission, imageSrc) {
             // Decode HTML entities in mission (e.g., &lt;br&gt; becomes <br>)
-            const decodedMission = decodeHtml(mission);
+            const decodedMission = "<br>" + decodeHtml(mission);
 
             // Update modal content
             document.getElementById('candidateName').textContent = name;

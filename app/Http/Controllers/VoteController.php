@@ -18,16 +18,25 @@ class VoteController extends Controller
 
     public function dashboard()
     {
+        $elections = Auth::user()->elections()->get();
+        $votes = Vote::all();
+        $electionUsers = ElectionUser::where("user_id", Auth::user()->id)->get();
+
+        // return view('history', [
+        //     "elections" => $elections,
+        //     "electionUsers" => $electionUsers,
+        //     "votes" => $votes
+        // ]);
 
         $level = Auth::user()->classroom->level;
         if ($level == 3) {
-            $elections = Election::where("category_id", 1)->orderByDesc("id")->get();
+            $electionsAll = Election::where("category_id", 1)->orderByDesc("id")->get();
 
-            return view('dashboard', ["elections" => $elections]);
+            return view('dashboard', ["electionsAll" => $electionsAll, "votes" => $votes, "elections" => $elections, "electionUsers" => $electionUsers]);
         } else {
-            $elections = Election::orderByDesc("id")->get();
+            $electionsAll = Election::orderByDesc("id")->get();
 
-            return view('dashboard', ["elections" => $elections]);
+            return view('dashboard', ["electionsAll" => $electionsAll, "votes" => $votes, "elections" => $elections,"electionUsers" => $electionUsers]);
         }
     }
     public function electionIndex()
