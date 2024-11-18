@@ -81,7 +81,7 @@ class VoteController extends Controller
             $limit = 1;
 
         } elseif ($level == 3) {
-            $limit = 1;
+            $limit = 0;
 
         } else {
             $limit = 0;
@@ -98,7 +98,7 @@ class VoteController extends Controller
                 "election" => $election
             ]);
         } elseif ($election->category_id == 2) {
-            if ($limit == 1) {
+            if ($limit == 0) {
                 return redirect()->route("elections");
             }
             return view("vote", [
