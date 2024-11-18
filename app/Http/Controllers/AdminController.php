@@ -149,31 +149,32 @@ class AdminController extends Controller
     public function getVoteData(string $id)
     {
         $election = Election::find($id);
+        $electionUser = ElectionUser::where("election_id", $id)->get();
         if ($election->category_id == 1) {
             // Assuming `candidate_name` is the name of the candidate, and each vote is a record
-            $electionUser = ElectionUser::where("election_id", $id)->get();
+
             $ayam = [];
             foreach ($electionUser as $bebek) {
                 // dd($bebek->has_voted);
                 if ($bebek->has_voted == 0) {
                     continue;
                 } else {
-                    
-                    $ayam[] = Vote::where("election_user_id",$bebek->id)->get()->first()->candidate_id;
+
+                    $ayam[] = Vote::where("election_user_id", $bebek->id)->get()->first()->candidate_id;
                 }
             }
             $candidates = Candidate::all();
             $candidatesName = [];
             // $counter = 1;
-            foreach ($candidates as $candidate){
-                if($candidate->election->category_id == 1){
+            foreach ($candidates as $candidate) {
+                if ($candidate->election->category_id == 1) {
                     $candidatesName[$candidate->id] = $candidate->name;
 
-                }else{
+                } else {
                     continue;
                 }
             }
-             
+
             $kuda = [1, 1, 1, 2, 1, 2, 1, 2, 3, 3, 3, 4, 4, 4];
             $naga = [
                 'candidates' => $candidatesName,
@@ -181,7 +182,37 @@ class AdminController extends Controller
             ];
             // dd($naga);
             return response()->json($naga);
-        }else{
+        } elseif ($election->category_id == 2) {
+            $classroomAll = Classroom::where("level", "!=", 3)->get();
+            $classrooms = [];
+            foreach ($classroomAll as $classroom) {
+                $classrooms[$classroom->classroom] = [];
+
+                $candidates = Candidate::where("classroom_id", $classroom->id)->where("election_id", $id)->get();
+
+                foreach ($candidates as $candidate) {
+                    $classrooms[$classroom->classroom][] = $candidate;
+                }
+            }
+            // dd($classrooms);
+
+            $ayam = [];
+            foreach ($electionUser as $bebek) {
+                // dd($bebek->has_voted);
+                if ($bebek->has_voted == 0) {
+                    continue;
+                } else {
+
+                    $ayam[] = Vote::where("election_user_id", $bebek->id)->get()->first()->candidate_id;
+                }
+            }
+            $naga = [
+                'classrooms' => $classrooms,
+                'votes' => $ayam,
+            ];
+            return response()->json($naga);
+
+        } else {
             return redirect()->route("dashboard");
         }
 
