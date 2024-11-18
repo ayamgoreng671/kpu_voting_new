@@ -37,7 +37,7 @@
         <div class="container mx-auto flex justify-between items-center px-20">
             <!-- Replace text with logo -->
             <a href="/">
-                <img src="{{ asset("logo/telkom.svg") }}" alt="Secure Voting Platform Logo" class="" width="120">
+                <img src="{{ asset('logo/telkom.svg') }}" alt="Secure Voting Platform Logo" class="" width="120">
             </a>
             <nav class="flex">
                 <a href="{{ route('dashboard') }}" class="text-white hover:underline ml-4">Dashboard</a>
@@ -76,35 +76,38 @@
                             @endif
 
                             <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg p-4 space-x-4">
-                                <img src="{{$candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png')  }}" alt="https://via.placeholder.com/100" class="w-24 h-24 rounded-full object-cover">
+                                <img src="{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png') }}"
+                                    alt="https://via.placeholder.com/100" class="w-24 h-24 rounded-full object-cover">
                                 <div class="flex-1">
                                     <label>
-                                        <input type="radio" name="candidate" value="{{ $candidate->id }}" class="mr-2">
+                                        <input type="radio" name="candidate" value="{{ $candidate->id }}"
+                                            class="mr-2">
                                         <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
                                     </label>
                                     <p class="text-gray-500 text-sm mt-1">{{ $candidate->bio }}</p>
-    
+
                                     <button type="button" class="text-primary hover:underline text-sm"
-                                    onclick="openModal('{{ $candidate->name }}', '{{ $candidate->vision }}', '{{ $candidate->mission }}', '{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png') }}')">View
-                                    Full Profile</button>
+                                        onclick='openModal("{{ $candidate->name }}", "{{ $candidate->vision }}", @json($candidate->mission), "{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url("photos/default.png") }}")'>View
+                                        Full Profile</button>
                                 </div>
                             </div>
                         @else
-                        <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg p-4 space-x-4">
-                            <img src="{{$candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png')  }}" alt="https://via.placeholder.com/100" class="w-24 h-24 rounded-full object-cover">
-                            <div class="flex-1">
-                                <label>
-                                    <input type="radio" name="candidate" value="{{ $candidate->id }}" class="mr-2">
-                                    <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
-                                </label>
-                                <p class="text-gray-500 text-sm mt-1">{{ $candidate->bio }}</p>
+                            <div class="flex items-center bg-gray-50 border border-gray-300 rounded-lg p-4 space-x-4">
+                                <img src="{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png') }}"
+                                    alt="https://via.placeholder.com/100" class="w-24 h-24 rounded-full object-cover">
+                                <div class="flex-1">
+                                    <label>
+                                        <input type="radio" name="candidate" value="{{ $candidate->id }}"
+                                            class="mr-2">
+                                        <span class="text-gray-800 font-semibold">{{ $candidate->name }}</span>
+                                    </label>
+                                    <p class="text-gray-500 text-sm mt-1">{{ $candidate->bio }}</p>
 
-                                <button type="button" class="text-primary hover:underline text-sm"
-                                onclick="openModal('{{ $candidate->name }}', '{{ $candidate->vision }}', '{{ $candidate->mission }}', '{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url('photos/default.png') }}')">View
-                                Full Profile</button>
+                                    <button type="button" class="text-primary hover:underline text-sm"
+                                    onclick='openModal("{{ $candidate->name }}", "{{ $candidate->vision }}", @json($candidate->mission), "{{ $candidate->photo != null ? Storage::url($candidate->photo) : Storage::url("photos/default.png") }}")'>View
+                                        Full Profile</button>
+                                </div>
                             </div>
-                        </div>
-
                         @endif
                     @endforeach
 
@@ -143,33 +146,46 @@
 
     <!-- JavaScript for Modals -->
     <script>
-        // Function to open the profile modal and apply transition effect
+        // Function to decode HTML entities (e.g., &lt;br&gt; becomes <br>)
+        function decodeHtml(html) {
+            var txt = document.createElement('textarea');
+            txt.innerHTML = html;
+            return txt.value;
+        }
+
         function openModal(name, vision, mission, imageSrc) {
+            // Decode HTML entities in mission (e.g., &lt;br&gt; becomes <br>)
+            const decodedMission = decodeHtml(mission);
+
+            // Update modal content
             document.getElementById('candidateName').textContent = name;
             document.getElementById('candidateVision').textContent = vision;
-            document.getElementById('candidateMission').textContent = mission;
+            document.getElementById('candidateMission').innerHTML = decodedMission; // Use innerHTML for HTML content
             document.getElementById('candidateImage').src = imageSrc;
 
+            // Show modal
             const overlay = document.getElementById('profileModal');
             const modalContent = document.querySelector('.modal-content');
 
-            overlay.classList.remove('hidden'); // Make modal visible
+            overlay.classList.remove('hidden'); // Show modal
             setTimeout(() => {
-                overlay.classList.add('active');
-                modalContent.classList.add('active');
-            }, 10); // Small delay to trigger transition
+                overlay.classList.add('active'); // Trigger transition
+                modalContent.classList.add('active'); // Add active class for modal
+            }, 10);
         }
 
-        // Function to close the profile modal and remove transition effect
+
+        // Close modal function
         function closeModal() {
             const overlay = document.getElementById('profileModal');
             const modalContent = document.querySelector('.modal-content');
 
             overlay.classList.remove('active');
             modalContent.classList.remove('active');
+
             setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 300); // Match this delay with the transition duration for smooth hiding
+                overlay.classList.add('hidden'); // Hide modal after transition
+            }, 300); // Match with transition duration
         }
     </script>
 </x-app-layout>
