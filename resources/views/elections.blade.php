@@ -42,7 +42,7 @@
         </h2>
 
         <!-- Filters Section -->
-        <section class="mb-6">
+        {{-- <section class="mb-6">
             <div class="flex justify-center gap-4">
                 <input type="text" placeholder="Search elections..."
                     class="border border-gray-300 p-2 rounded-lg w-full max-w-md" />
@@ -53,7 +53,7 @@
                     <option value="international">International</option>
                 </select>
             </div>
-        </section>
+        </section> --}}
 
         <!-- Elections List Section -->
         <section class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 ">
@@ -62,9 +62,9 @@
                 <div class="bg-white shadow-md rounded-lg p-6">
                     <h3 class="text-xl font-semibold text-gray-800">{{ $election->name }}</h3>
                     <p class="text-gray-600 mt-2">
-                        [Description for Election 1]
+                        {{ $election->description }}
                     </p>
-                    <p class="text-gray-500 text-sm mt-1">Ends on: [End Date and Time]</p>
+                    <p class="text-gray-500 text-sm mt-1">Ends on: {{ $election->end_datetime }}</p>
                     <div class="mt-4 flex justify-between items-center">
                         {{-- {{ dd() }} --}}
                         @if (Auth::user()->elections()->where('election_id', $election->id)->first()->pivot->has_voted == 0)

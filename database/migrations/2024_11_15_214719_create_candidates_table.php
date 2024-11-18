@@ -14,9 +14,9 @@ return new class extends Migration {
             $table->id();
             $table->string("photo")->nullable();
             $table->string("name");
-            $table->string("bio");
-            $table->string("vision");
-            $table->string("mission");
+            $table->text("bio");
+            $table->text("vision");
+            $table->text("mission");
             // $table->string("contract_candidateId");
             $table->foreignId("classroom_id")->constrained();
             $table->foreignId("election_id")->constrained();
