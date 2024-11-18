@@ -19,7 +19,7 @@ class ElectionSeeder extends Seeder
         $newElection = Election::create([
 
             "name" => "Pemilihan Ketos/Waketos Periode Tahun 2025",
-            "description" => "mbledos",
+            "description" => "Pemilihan Ketua OSIS dan Wakil Ketua OSIS Periode 2025",
 
             "start_datetime" => "2024-11-18 07:00:00",
             "end_datetime" => "2024-11-19 17:00:00",
@@ -56,7 +56,7 @@ class ElectionSeeder extends Seeder
         $newElection = Election::create([
 
             "name" => "Pemilihan MPK Periode Tahun 2025",
-            "description" => "mbledos",
+            "description" => "Pemilihan Majelis Perwakilan Kelas (MPK) Periode 2025",
 
             "start_datetime" => "2024-11-18 07:00:00",
             "end_datetime" => "2024-11-18 17:00:00",
