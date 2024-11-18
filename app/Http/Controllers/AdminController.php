@@ -158,11 +158,29 @@ class AdminController extends Controller
                 if ($bebek->has_voted == 0) {
                     continue;
                 } else {
-                    $ayam[] = $bebek->id;
+                    
+                    $ayam[] = Vote::where("election_user_id",$bebek->id)->get()->first()->candidate_id;
                 }
             }
+            $candidates = Candidate::all();
+            $candidatesName = [];
+            // $counter = 1;
+            foreach ($candidates as $candidate){
+                if($candidate->election->category_id == 1){
+                    $candidatesName[$candidate->id] = $candidate->name;
+
+                }else{
+                    continue;
+                }
+            }
+             
             $kuda = [1, 1, 1, 2, 1, 2, 1, 2, 3, 3, 3, 4, 4, 4];
-            return response()->json($ayam);
+            $naga = [
+                'candidates' => $candidatesName,
+                'votes' => $ayam,
+            ];
+            // dd($naga);
+            return response()->json($naga);
         }else{
             return redirect()->route("dashboard");
         }

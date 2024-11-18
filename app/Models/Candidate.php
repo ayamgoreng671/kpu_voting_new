@@ -20,4 +20,8 @@ class Candidate extends Model
     public function classroom(){
         return $this->belongsTo(Classroom::class);
     }
+
+    public function election(){
+        return $this->belongsTo(Election::class);
+    }
 }

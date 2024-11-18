@@ -87,25 +87,33 @@
     </footer>
     <script>
         const voteChartCtx = document.getElementById('electionResultsChart').getContext('2d');
-        const voterTurnoutCtx = document.getElementById('voterTurnoutChart').getContext('2d');
-        const participationTrendsCtx = document.getElementById('participationTrendsChart').getContext('2d');
         const pieChartCtx = document.getElementById('pieChart').getContext('2d');
         const doughnutChartCtx = document.getElementById('doughnutChart').getContext('2d');
 
-        const duarrr = document.getElementById('tumbal').value;
-        // Fetch the raw data (array of candidate IDs)
-        fetch(`/admin/manage/${duarrr}/analytics/data`)
+        const electionId = document.getElementById('tumbal').value;
+
+        // Fetch the structured data
+        fetch(`/admin/manage/${electionId}/analytics/data`)
             .then(response => response.json())
             .then(data => {
-                // Count the occurrences of each candidate ID
-                const voteCounts = data.reduce((acc, candidateId) => {
-                    acc[candidateId] = (acc[candidateId] || 0) + 1;
-                    return acc;
-                }, {});
+                console.log(data); // Inspect the structure of the response
 
-                // Convert the object to arrays for labels and values
-                const labels = Object.keys(voteCounts); // Candidate IDs
-                const values = Object.values(voteCounts); // Vote counts
+                // Validate and extract data
+                const candidates = data.candidates || {}; // Object mapping candidate IDs to names
+                const votes = Array.isArray(data.votes) ? data.votes : [];
+
+                // Calculate the vote counts for each candidate
+                const voteCounts = {};
+                votes.forEach(voteId => {
+                    voteCounts[voteId] = (voteCounts[voteId] || 0) + 1;
+                });
+                console.log(voteCounts);
+
+                // Convert to arrays for chart labels and values
+                const labels = Object.keys(candidates).map(id => candidates[id]); // Candidate names
+                const values = Object.keys(candidates).map(id => voteCounts[id] || 0); // Votes per candidate
+                console.log(labels);
+                console.log(voteCounts);
 
                 // Generate colors dynamically
                 const colors = ['#B8292D', '#FFA07A', '#FFC0CB', '#FFD700', '#8B0000'];
@@ -114,18 +122,24 @@
                 new Chart(voteChartCtx, {
                     type: 'bar',
                     data: {
-                        labels: labels.map(id => `Candidate ${id}`),
-                        datasets: [{
-                            label: 'Total Votes',
-                            data: values,
-                            backgroundColor: colors,
-                        }]
+                        labels: ['Total Votes'], // Single label to group all candidates in one bar chart
+                        datasets: labels.map((label, index) => ({
+                            label: label, // Candidate's name as the legend label
+                            data: [values[index]], // Corresponding vote count
+                            backgroundColor: colors[index], // Unique color for each candidate
+                        }))
                     },
                     options: {
                         responsive: true,
                         plugins: {
                             legend: {
-                                display: false
+                                display: true, // Enable the legend
+                                position: 'top', // Legend position
+                                labels: {
+                                    font: {
+                                        size: 12 // Adjust legend font size
+                                    }
+                                }
                             }
                         },
                         scales: {
@@ -146,11 +160,13 @@
                     }
                 });
 
+
+
                 // Pie Chart
                 new Chart(pieChartCtx, {
                     type: 'pie',
                     data: {
-                        labels: labels.map(id => `Candidate ${id}`),
+                        labels: labels, // Candidate names
                         datasets: [{
                             label: 'Votes',
                             data: values,
@@ -171,7 +187,7 @@
                 new Chart(doughnutChartCtx, {
                     type: 'doughnut',
                     data: {
-                        labels: labels.map(id => `Candidate ${id}`),
+                        labels: labels, // Candidate names
                         datasets: [{
                             label: 'Votes',
                             data: values,
@@ -187,87 +203,11 @@
                         }
                     }
                 });
-
-                // Example Data for Voter Turnout and Participation Trends
-                const turnoutData = [1200, 900, 1300, 1600]; // Example voter turnout
-                const trendsData = [400, 700, 1000, 1200]; // Example trends over time
-
-                // Bar Chart for Voter Turnout
-                new Chart(voterTurnoutCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: ['Region A', 'Region B', 'Region C', 'Region D'],
-                        datasets: [{
-                            label: 'Voter Turnout',
-                            data: turnoutData,
-                            backgroundColor: '#B8292D',
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Voters'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Region'
-                                }
-                            }
-                        }
-                    }
-                });
-
-                // Line Chart for Participation Trends
-                new Chart(participationTrendsCtx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                        datasets: [{
-                            label: 'Participation',
-                            data: trendsData,
-                            backgroundColor: '#B8292D',
-                            borderColor: '#B8292D',
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        },
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Participants'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Week'
-                                }
-                            }
-                        }
-                    }
-                });
             })
             .catch(error => console.error('Error fetching vote data:', error));
     </script>
+
+
 
 
 </x-app-layout>
