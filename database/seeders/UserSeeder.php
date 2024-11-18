@@ -15,39 +15,39 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::create([
+        // $user = User::create([
 
-            "name" => "ayam",
-            "voterId" => "500001",
+        //     "name" => "ayam",
+        //     "voterId" => "500001",
 
-            "email" => "ayam@gmail.com",
-            "classroom_id" => 1,
-            "password" => bcrypt("ayam1234"),
-        ]);
+        //     "email" => "ayam@gmail.com",
+        //     "classroom_id" => 1,
+        //     "password" => bcrypt("ayam1234"),
+        // ]);
 
-        $user->assignRole("voter");
+        // $user->assignRole("voter");
 
-        $user = User::create([
+        // $user = User::create([
 
-            "name" => "bebek",
-            "voterId" => "500002",
-            "email" => "bebek@gmail.com",
-            "classroom_id" => 1,
-            "password" => bcrypt("bebek1234"),
-        ]);
+        //     "name" => "bebek",
+        //     "voterId" => "500002",
+        //     "email" => "bebek@gmail.com",
+        //     "classroom_id" => 1,
+        //     "password" => bcrypt("bebek1234"),
+        // ]);
 
-        $user->assignRole("voter");
+        // $user->assignRole("voter");
 
-        $user = User::create([
+        // $user = User::create([
 
-            "name" => "kuda",
-            "voterId" => "500003",
-            "email" => "kuda@gmail.com",
-            "classroom_id" => 2,
-            "password" => bcrypt("kuda1234"),
-        ]);
+        //     "name" => "kuda",
+        //     "voterId" => "500003",
+        //     "email" => "kuda@gmail.com",
+        //     "classroom_id" => 2,
+        //     "password" => bcrypt("kuda1234"),
+        // ]);
 
-        $user->assignRole("voter");
+        // $user->assignRole("voter");
 
         // Path to your CSV file
         $filePath = database_path('data.csv');
