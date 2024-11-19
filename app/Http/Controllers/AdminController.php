@@ -168,19 +168,33 @@ class AdminController extends Controller
     {
         $election = Election::find($id);
         $electionUser = ElectionUser::where("election_id", $id)->get();
+        // dd($electionUser);
         if ($election->category_id == 1) {
             // Assuming `candidate_name` is the name of the candidate, and each vote is a record
 
             $ayam = [];
-            foreach ($electionUser as $bebek) {
-                // dd($bebek->has_voted);
-                if ($bebek->has_voted == 0) {
-                    continue;
-                } else {
+            $tumbal = [];
+            // foreach ($electionUser as $bebek) {
+            //     // dd($bebek->has_voted);
+                
+            //     if ($bebek->has_voted == 0) {
+            //         continue;
+            //     } else {
+            //         $tumbal[] = $bebek->id;
+            //         $count = ElectionUser::join('votes', 'election_users.id', '=', 'votes.election_user_id')
+            //         ->where('election_users.has_voted', 1)  // Change to check 'has_voted' in election_users table
+            //         ->where('election_users.election_id', $id)
+            //         ->count();
 
-                    $ayam[] = Vote::where("election_user_id", $bebek->id)->get()->first()->candidate_id;
-                }
-            }
+            //         $ayam[] = Vote::where("election_user_id", $bebek->id)->get()->first()->candidate_id;
+            //     }
+            // }
+            $ayam = Vote::join('election_users', 'votes.election_user_id', '=', 'election_users.id')
+            ->where('election_users.election_id', $id)
+            ->pluck('votes.candidate_id');
+
+            // dd($ayam);
+        
             $candidates = Candidate::all();
             $candidatesName = [];
             // $counter = 1;
