@@ -116,9 +116,11 @@ class VoteController extends Controller
         }elseif($userClass == 1){
             $userClassFormatted = 7;
 
+        }else{
+            $userClassFormatted = $userClass;
         }
 
-        $candidates = Candidate::where("election_id", $id)->where("classroom_id", $userClass)->get();
+        $candidates = Candidate::where("election_id", $id)->where("classroom_id", $userClassFormatted)->get();
         // dd($candidates);
         if ($election->category_id == 1) {
             
@@ -134,7 +136,7 @@ class VoteController extends Controller
             }
             return view("vote", [
                 "candidates" => $candidates,
-                "candidatesCount" => Candidate::where("election_id", $id)->where("classroom_id", $userClass)->count(),
+                "candidatesCount" => Candidate::where("election_id", $id)->where("classroom_id", $userClassFormatted)->count(),
                 "limit" => $limit,
                 "election" => $election
             ]);
