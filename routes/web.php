@@ -61,6 +61,7 @@ Route::middleware([
     Route::get('/admin/manage', [AdminController::class, "manageView"])->name('admin.manage');
     Route::post('/admin/manage', [AdminController::class, "electionPost"])->name('admin.manage.electionpost');
     Route::get('/admin/manage/{id}', [AdminController::class, "manageElectionView"])->name('admin.manage.election');
+    Route::put('/admin/manage/{id}', [AdminController::class, "electionUpdate"])->name('admin.manage.electionupdate');
     Route::get('/admin/manage/{id}/analytics', [AdminController::class, "manageAnalyticsView"])->name('admin.manage.analytics');
     Route::post('/admin/manage/{id}', [AdminController::class, "addCandidate"])->name('admin.manage.addcandidate');
     Route::post('/admin/manage/{id}/voter', [AdminController::class, "addAllVoterId"])->name('admin.manage.addvoter');

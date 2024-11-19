@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreCandidateRequest;
 use App\Http\Requests\StoreElectionRequest;
+use App\Http\Requests\UpdateElectionRequest;
 use App\Models\Candidate;
 use App\Models\Category;
 use App\Models\Classroom;
@@ -62,6 +63,8 @@ class AdminController extends Controller
             }
         }
 
+
+
         $users = User::all();
         foreach ($users as $user) {
             $newElectionUser["election_id"] = $newDataRecord->id;
@@ -78,6 +81,21 @@ class AdminController extends Controller
 
 
     }
+
+    public function electionUpdate(UpdateElectionRequest $request, string $id)
+    {
+        $validated = $request->validated();
+        $start = Carbon::parse($validated["start_datetime"]);
+        $end = Carbon::parse($validated["end_datetime"]);
+
+        $secondsDifference = $start->diffInSeconds($end);
+        
+        $election = Election::find($id);
+
+        $election->update($validated);
+
+        return redirect()->route("admin.manage.election",$id);
+        }
 
     public function manageElectionView(string $id)
     {

@@ -96,12 +96,34 @@ class VoteController extends Controller
             $limit = 0;
         }
 
+        if($userClass == 7){
+            $userClassFormatted = 1;
+        }elseif($userClass == 6){
+            $userClassFormatted = 2;
+
+        }elseif($userClass == 5){
+            $userClassFormatted = 3;
+
+        }elseif($userClass == 4){
+            $userClassFormatted = 4;
+
+        }elseif($userClass == 3){
+            $userClassFormatted = 5;
+
+        }elseif($userClass == 2){
+            $userClassFormatted = 6;
+
+        }elseif($userClass == 1){
+            $userClassFormatted = 7;
+
+        }
+
         $candidates = Candidate::where("election_id", $id)->where("classroom_id", $userClass)->get();
         // dd($candidates);
         if ($election->category_id == 1) {
             
             return view("vote", [
-                "candidatesCount" => Candidate::where("election_id", $id)->where("classroom_id", $userClass)->count(),
+                "candidatesCount" => Candidate::where("election_id", $id)->where("classroom_id", $userClassFormatted)->count(),
                 "candidates" => Candidate::where("election_id", $id)->get(),
                 "limit" => $limit,
                 "election" => $election

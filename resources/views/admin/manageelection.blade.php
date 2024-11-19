@@ -46,13 +46,15 @@ background-color: rgb(185 28 28 / var(--tw-bg-opacity));">
             <h2 class="text-xl font-bold text-primary mb-4">Edit Election</h2>
 
             <!-- Edit Election Form -->
-            <form action="/elections/update" method="POST" class="space-y-4">
+            <form action="{{ route("admin.manage.electionupdate", $election->id) }}" method="POST" class="space-y-4">
+                @csrf
+                @method("PUT")
                 <input type="hidden" name="id" value="123"> <!-- Hidden input for election ID -->
 
                 <!-- Election Title -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Election Title</label>
-                    <input type="text" name="title" value="{{ $election->name }}"
+                    <input type="text" name="name" value="{{ $election->name }}"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
                         placeholder="Election Name" required>
                 </div>
@@ -73,16 +75,16 @@ background-color: rgb(185 28 28 / var(--tw-bg-opacity));">
                     <div class="flex-1">
 
                         <label class="block text-sm font-medium text-gray-700">Start Date</label>
-                        <input type="datetime-local" name="start_date" value="{{ $election->start_datetime }}"
+                        <input type="datetime-local" name="start_datetime" value="{{ $election->start_datetime }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
-                            disabled>
+                            >
                     </div>
                     <!-- End Date -->
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700">End Date</label>
-                        <input type="datetime-local" name="end_date" value="{{ $election->end_datetime }}"
+                        <input type="datetime-local" name="end_datetime" value="{{ $election->end_datetime }}"
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-primary focus:border-primary"
-                            disabled>
+                            >
                     </div>
                 </div>
 
